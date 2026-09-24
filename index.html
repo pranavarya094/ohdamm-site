@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Oh Damm</title>
+<meta name="description" content="Oh Damm. Fashion that makes you say it. First drop coming soon.">
+<meta property="og:title" content="Oh Damm">
+<meta property="og:description" content="Clothing. First drop coming soon.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='black'/><text x='50' y='72' font-family='Arial Black,Arial' font-weight='900' font-size='64' text-anchor='middle' fill='%23E4E5E1'>o</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap" rel="stylesheet">
+<style>
+:root {
+--bg: #E4E5E1;      /* stone */
+--ink: #000000;     /* black */
+--muted: #5B5E5A;   /* graphite */
+--line: #BFC1BB;    /* concrete */
+--accent: #2F4A8A;  /* raw denim */
+--pad: clamp(1.25rem, 4vw, 3rem);
+color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+:root {
+--bg: #000000;
+--ink: #E4E5E1;
+--muted: #8A8D88;
+--line: #2E302D;
+--accent: #93A9E8;
+}
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+background: var(--bg);
+color: var(--ink);
+font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+font-stretch: 100%;
+font-weight: 400;
+font-size: 1rem;
+line-height: 1.5;
+-webkit-font-smoothing: antialiased;
+min-height: 100svh;
+display: grid;
+grid-template-rows: auto 1fr auto auto;
+padding-top: env(safe-area-inset-top, 0px);
+padding-bottom: env(safe-area-inset-bottom, 0px);
+overflow-x: hidden;
+}
+a { color: inherit; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+a:hover { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+/* Top bar */
+.top {
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+gap: 1rem;
+padding: var(--pad);
+font-size: 0.95rem;
+}
+.top p { margin: 0; color: var(--muted); }
+.top nav { display: flex; gap: 1.5rem; }
+/* The wordmark: the one loud thing on the page */
+.mark-wrap {
+align-self: end;
+overflow: hidden;
+padding: 0 var(--pad);
+}
+.kicker {
+margin: 0 0 clamp(0.5rem, 1.5vw, 1.25rem);
+font-weight: 500;
+font-stretch: 100%;
+font-size: clamp(1.25rem, 3.2vw, 2.75rem);
+line-height: 1.1;
+letter-spacing: -0.01em;
+}
+.mark {
+margin: 0;
+font-stretch: 125%;
+font-weight: 850;
+font-size: clamp(3.5rem, 15.5vw, 20rem);
+line-height: 0.78;
+letter-spacing: -0.045em;
+white-space: nowrap;
+cursor: default;
+user-select: none;
+padding-bottom: 0.06em;
+}
+.mark:focus-visible { outline-offset: 6px; }
+/* Signup */
+.signup {
+display: grid;
+grid-template-columns: minmax(0, 30rem) 1fr;
+gap: 1.5rem var(--pad);
+padding: clamp(1.5rem, 4vw, 2.5rem) var(--pad) 0;
+border-top: 1px solid var(--line);
+margin: clamp(1rem, 3vw, 2rem) var(--pad) 0;
+padding-left: 0;
+padding-right: 0;
+}
+.signup h2 {
+margin: 0;
+font-weight: 500;
+font-size: clamp(1.25rem, 2.2vw, 1.6rem);
+line-height: 1.25;
+max-width: 24ch;
+}
+.signup h2 span { display: block; color: var(--muted); }
+form { display: flex; flex-wrap: wrap; gap: 0.75rem; align-content: start; max-width: 32rem; }
+.field { flex: 1 1 14rem; display: grid; gap: 0.35rem; }
+label { font-size: 0.85rem; color: var(--muted); }
+input[type="email"] {
+font: inherit;
+color: var(--ink);
+background: transparent;
+border: 0;
+border-bottom: 1px solid var(--ink);
+border-radius: 0;
+padding: 0.55rem 0;
+width: 100%;
+}
+input[type="email"]::placeholder { color: var(--muted); opacity: 0.7; }
+input[type="email"]:focus-visible { outline: none; border-bottom: 2px solid var(--accent); padding-bottom: calc(0.55rem - 1px); }
+button {
+font: inherit;
+font-weight: 600;
+align-self: end;
+background: var(--ink);
+color: var(--bg);
+border: 0;
+border-radius: 999px;
+padding: 0.75rem 1.4rem;
+cursor: pointer;
+}
+button:hover { background: var(--accent); color: #fff; }
+button[disabled] { opacity: 0.5; cursor: progress; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.status { flex-basis: 100%; margin: 0; min-height: 1.5em; font-size: 0.95rem; }
+.status.error { color: #B3261E; }
+@media (prefers-color-scheme: dark) { .status.error { color: #FF8A80; } }
+/* Footer */
+.foot {
+display: flex;
+justify-content: space-between;
+gap: 1rem;
+padding: clamp(2rem, 5vw, 3.5rem) var(--pad) var(--pad);
+font-size: 0.85rem;
+color: var(--muted);
+}
+.foot p { margin: 0; }
+@media (max-width: 720px) {
+.signup { grid-template-columns: 1fr; }
+.top { flex-direction: column; gap: 0.5rem; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+<p>Clothing. First drop coming soon.</p>
+<nav aria-label="Contact">
+<a id="ig-link" href="https://instagram.com/ohdamm.official" rel="noopener">Instagram</a>
+<a id="mail-link" href="mailto:hello@example.com">Email</a>
+</nav>
+</header>
+<div class="mark-wrap">
+<p class="kicker" id="kicker">Fashion that makes you say</p>
+<h1 class="mark" id="mark" tabindex="0" aria-label="Oh Damm"><span aria-hidden="true" id="mark-text">Oh Damm</span></h1>
+</div>
+<section class="signup" aria-labelledby="signup-title">
+<h2 id="signup-title">Be first to see the drop.<span>Join the list and we'll email you the date.</span></h2>
+<form id="notify" method="POST" novalidate>
+<div class="field">
+<label for="email">Email</label>
+<input id="email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required>
+</div>
+<div class="hp" aria-hidden="true">
+<label for="website">Leave this empty</label>
+<input id="website" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
+</div>
+<button type="submit">Notify me</button>
+<p class="status" id="status" role="status" aria-live="polite"></p>
+</form>
+</section>
+<footer class="foot">
+<p>&copy; <span id="year">2026</span> Oh Damm</p>
+<p>Nothing to see yet. Almost.</p>
+</footer>
+<script>
+/* ====== Edit these two lines ====== */
+const INSTAGRAM_URL = "https://instagram.com/ohdamm.official";
+const CONTACT_EMAIL = ""; // add your email here later, e.g. "hello@ohdamm.com"
+const FORMSPREE_ID = "mppwldll";
+/* ================================== */
+document.getElementById("ig-link").href = INSTAGRAM_URL;
+const mailLink = document.getElementById("mail-link");
+if (CONTACT_EMAIL) { mailLink.href = "mailto:" + CONTACT_EMAIL; } else { mailLink.remove(); }
+document.getElementById("year").textContent = new Date().getFullYear();
+// Wordmark: the m's stretch out like the reaction itself
+const mark = document.getElementById("mark");
+const text = document.getElementById("mark-text");
+const BASE = "Oh Dam", MIN = 1, MAX = 14;
+const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let count = MIN, target = MIN, timer = null;
+function render() { text.textContent = BASE + "m".repeat(count); }
+function step() {
+if (count === target) { clearInterval(timer); timer = null; return; }
+count += count < target ? 1 : -1;
+render();
+}
+function goTo(n) {
+target = n;
+if (reduce) { count = n; render(); return; }
+if (!timer) timer = setInterval(step, count < n ? 70 : 35);
+}
+const stretch = () => goTo(MAX);
+const settle = () => goTo(MIN);
+mark.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") stretch(); });
+mark.addEventListener("pointerleave", e => { if (e.pointerType === "mouse") settle(); });
+mark.addEventListener("click", () => (target === MAX ? settle() : stretch()));
+mark.addEventListener("focus", stretch);
+mark.addEventListener("blur", settle);
+// Signup form
+const form = document.getElementById("notify");
+const status = document.getElementById("status");
+const email = document.getElementById("email");
+const btn = form.querySelector("button");
+function say(msg, isError) {
+status.textContent = msg;
+status.classList.toggle("error", !!isError);
+}
+form.addEventListener("submit", async e => {
+e.preventDefault();
+const value = email.value.trim();
+if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+say("That email doesn't look right. Check it and try again.", true);
+email.focus();
+return;
+}
+btn.disabled = true;
+say("");
+try {
+const res = await fetch("https://formspree.io/f/" + FORMSPREE_ID, {
+method: "POST",
+headers: { "Accept": "application/json" },
+body: new FormData(form)
+});
+if (!res.ok) throw new Error("failed");
+form.reset();
+say("You're on the list. We'll email you before the drop.");
+} catch (err) {
+say("Your email wasn't saved. Try again in a minute.", true);
+} finally {
+btn.disabled = false;
+}
+});
+</script>
+</body>
+</html>
