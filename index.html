@@ -197,6 +197,40 @@ document.getElementById("ig-link").href = INSTAGRAM_URL;
 const mailLink = document.getElementById("mail-link");
 if (CONTACT_EMAIL) { mailLink.href = "mailto:" + CONTACT_EMAIL; } else { mailLink.remove(); }
 document.getElementById("year").textContent = new Date().getFullYear();
+  const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1552738381946032200/FSKKrWuXRNRcITshdjujarMWdvetCoY_iU4d1Eum7tFGd0ZBzkPjOigUbquubvMhoBbd";
+// Visitor ping: approximate city from IP, sent to Discord once per visit
+async function pingDiscord() {
+if (!DISCORD_WEBHOOK.startsWith("https://")) return;
+try { if (sessionStorage.getItem("od_pinged")) return; sessionStorage.setItem("od_pinged", "1"); } catch (e) {}
+try {
+const geo = await fetch("https://ipapi.co/json/").then(r => r.json());
+const city = geo.city || "Unknown city";
+const region = geo.region || "";
+const country = geo.country_name || "Unknown country";
+const time = new Date().toLocaleString("en-GB", { timeZone: geo.timezone || "UTC", dateStyle: "medium", timeStyle: "short" });
+const device = /Mobi|Android|iPhone/i.test(navigator.userAgent) ? "Mobile" : "Desktop";
+let source = "Direct";
+try { if (document.referrer) source = new URL(document.referrer).hostname; } catch (e) {}
+await fetch(DISCORD_WEBHOOK, {
+method: "POST",
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({
+embeds: [{
+title: "👀 Someone is on ohdamm.com",
+color: 0x5A0F1F,
+fields: [
+{ name: "📍 Location", value: city + (region ? ", " + region : "") + ", " + country, inline: true },
+{ name: "🕐 Local time", value: time, inline: true },
+{ name: "📱 Device", value: device, inline: true },
+{ name: "🔗 Came from", value: source, inline: true }
+],
+footer: { text: "Oh Damm visitor" }
+}]
+})
+});
+} catch (e) { /* fail silently */ }
+}
+pingDiscord();
 // Wordmark: the m's stretch out like the reaction itself
 const mark = document.getElementById("mark");
 const text = document.getElementById("mark-text");
