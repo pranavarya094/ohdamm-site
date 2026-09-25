@@ -6,289 +6,496 @@
 <title>Oh Damm</title>
 <meta name="description" content="Oh Damm. Fashion that makes you say it. First drop coming soon.">
 <meta property="og:title" content="Oh Damm">
-<meta property="og:description" content="Clothing. First drop coming soon.">
+<meta property="og:description" content="Fashion that makes you say Oh Damm. First drop coming soon.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='black'/><text x='50' y='72' font-family='Arial Black,Arial' font-weight='900' font-size='64' text-anchor='middle' fill='%23E4E5E1'>o</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="look-6.webp">
 <style>
-:root {
---bg: #E4E5E1;      /* stone */
---ink: #000000;     /* black */
---muted: #5B5E5A;   /* graphite */
---line: #BFC1BB;    /* concrete */
---accent: #2F4A8A;  /* raw denim */
---pad: clamp(1.25rem, 4vw, 3rem);
-color-scheme: light dark;
-}
-@media (prefers-color-scheme: dark) {
-:root {
---bg: #000000;
---ink: #E4E5E1;
---muted: #8A8D88;
---line: #2E302D;
---accent: #93A9E8;
-}
-}
-*, *::before, *::after { box-sizing: border-box; }
-html, body { margin: 0; height: 100%; }
-body {
-background: var(--bg);
-color: var(--ink);
-font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
-font-stretch: 100%;
-font-weight: 400;
-font-size: 1rem;
-line-height: 1.5;
--webkit-font-smoothing: antialiased;
-min-height: 100svh;
-display: grid;
-grid-template-rows: auto 1fr auto auto;
-padding-top: env(safe-area-inset-top, 0px);
-padding-bottom: env(safe-area-inset-bottom, 0px);
-overflow-x: hidden;
-}
-a { color: inherit; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
-a:hover { color: var(--accent); }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-/* Top bar */
-.top {
-display: flex;
-justify-content: space-between;
-align-items: baseline;
-gap: 1rem;
-padding: var(--pad);
-font-size: 0.95rem;
-}
-.top p { margin: 0; color: var(--muted); }
-.top nav { display: flex; gap: 1.5rem; }
-/* The wordmark: the one loud thing on the page */
-.mark-wrap {
-align-self: end;
-overflow: hidden;
-padding: 0 var(--pad);
-}
-.kicker {
-margin: 0 0 clamp(0.5rem, 1.5vw, 1.25rem);
-font-weight: 500;
-font-stretch: 100%;
-font-size: clamp(1.25rem, 3.2vw, 2.75rem);
-line-height: 1.1;
-letter-spacing: -0.01em;
-}
-.mark {
-margin: 0;
-font-stretch: 125%;
-font-weight: 850;
-font-size: clamp(3.5rem, 15.5vw, 20rem);
-line-height: 0.78;
-letter-spacing: -0.045em;
-white-space: nowrap;
-cursor: default;
-user-select: none;
-padding-bottom: 0.06em;
-}
-.mark:focus-visible { outline-offset: 6px; }
-/* Signup */
-.signup {
-display: grid;
-grid-template-columns: minmax(0, 30rem) 1fr;
-gap: 1.5rem var(--pad);
-padding: clamp(1.5rem, 4vw, 2.5rem) var(--pad) 0;
-border-top: 1px solid var(--line);
-margin: clamp(1rem, 3vw, 2rem) var(--pad) 0;
-padding-left: 0;
-padding-right: 0;
-}
-.signup h2 {
-margin: 0;
-font-weight: 500;
-font-size: clamp(1.25rem, 2.2vw, 1.6rem);
-line-height: 1.25;
-max-width: 24ch;
-}
-.signup h2 span { display: block; color: var(--muted); }
-form { display: flex; flex-wrap: wrap; gap: 0.75rem; align-content: start; max-width: 32rem; }
-.field { flex: 1 1 14rem; display: grid; gap: 0.35rem; }
-label { font-size: 0.85rem; color: var(--muted); }
-input[type="email"] {
-font: inherit;
-color: var(--ink);
-background: transparent;
-border: 0;
-border-bottom: 1px solid var(--ink);
-border-radius: 0;
-padding: 0.55rem 0;
-width: 100%;
-}
-input[type="email"]::placeholder { color: var(--muted); opacity: 0.7; }
-input[type="email"]:focus-visible { outline: none; border-bottom: 2px solid var(--accent); padding-bottom: calc(0.55rem - 1px); }
-button {
-font: inherit;
-font-weight: 600;
-align-self: end;
-background: var(--ink);
-color: var(--bg);
-border: 0;
-border-radius: 999px;
-padding: 0.75rem 1.4rem;
-cursor: pointer;
-}
-button:hover { background: var(--accent); color: #fff; }
-button[disabled] { opacity: 0.5; cursor: progress; }
-.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-.status { flex-basis: 100%; margin: 0; min-height: 1.5em; font-size: 0.95rem; }
-.status.error { color: #B3261E; }
-@media (prefers-color-scheme: dark) { .status.error { color: #FF8A80; } }
-/* Footer */
-.foot {
-display: flex;
-justify-content: space-between;
-gap: 1rem;
-padding: clamp(2rem, 5vw, 3.5rem) var(--pad) var(--pad);
-font-size: 0.85rem;
-color: var(--muted);
-}
-.foot p { margin: 0; }
-@media (max-width: 720px) {
-.signup { grid-template-columns: 1fr; }
-.top { flex-direction: column; gap: 0.5rem; }
-}
+  :root {
+    --bg: #E4E5E1;      /* stone */
+    --ink: #000000;     /* black */
+    --muted: #5B5E5A;   /* graphite */
+    --line: #BFC1BB;    /* concrete */
+    --accent: #2F4A8A;  /* raw denim */
+    --stone: #E4E5E1;
+    --pad: clamp(1.25rem, 4vw, 3rem);
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000000;
+      --ink: #E4E5E1;
+      --muted: #8A8D88;
+      --line: #2E302D;
+      --accent: #93A9E8;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    font-stretch: 100%;
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  html.intro-on, html.intro-on body { overflow: hidden; height: 100%; }
+
+  a { color: inherit; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+  a:hover { color: var(--accent); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  /* ---------- Flash-cut intro ---------- */
+  .intro { display: none; }
+  html.intro-on .intro {
+    display: block;
+    position: fixed; inset: 0; z-index: 50;
+    background: #000; color: var(--stone);
+    overflow: hidden; cursor: pointer;
+    transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+  .intro.leave { transform: translateY(-100%); }
+  .intro img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; opacity: 0;
+    filter: contrast(1.08) saturate(0.9);
+  }
+  .intro img.on { opacity: 1; }
+  .intro-word {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    padding: 0 4vw;
+    font-stretch: 125%; font-weight: 850;
+    font-size: clamp(3rem, 15vw, 13rem);
+    line-height: 0.85; letter-spacing: -0.045em;
+    text-align: center; white-space: nowrap;
+    text-shadow: 0 0.04em 0.4em rgba(0,0,0,0.45);
+    pointer-events: none;
+  }
+  .intro-skip {
+    position: absolute; right: var(--pad); bottom: calc(var(--pad) + env(safe-area-inset-bottom, 0px));
+    font: inherit; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--stone); background: none; border: 0; opacity: 0.7; cursor: pointer; padding: 0.5rem;
+  }
+  .intro-skip:hover { opacity: 1; color: var(--stone); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    min-height: 100svh;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .top {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+    padding: var(--pad); font-size: 0.95rem;
+  }
+  .top p { margin: 0; color: var(--muted); }
+  .top nav { display: flex; gap: 1.5rem; }
+  .mark-wrap { align-self: end; overflow: hidden; padding: 0 var(--pad) clamp(1.5rem, 4vw, 3rem); }
+  .kicker {
+    margin: 0 0 clamp(0.5rem, 1.5vw, 1.25rem);
+    font-weight: 500; font-size: clamp(1.25rem, 3.2vw, 2.75rem);
+    line-height: 1.1; letter-spacing: -0.01em;
+  }
+  .mark {
+    margin: 0;
+    font-stretch: 125%; font-weight: 850;
+    font-size: clamp(3.5rem, 15.5vw, 20rem);
+    line-height: 0.78; letter-spacing: -0.045em;
+    white-space: nowrap; cursor: default; user-select: none;
+    padding-bottom: 0.06em;
+  }
+  .mark:focus-visible { outline-offset: 6px; }
+
+  /* ---------- Infinite runway ---------- */
+  .runway {
+    padding: clamp(2rem, 6vw, 5rem) 0;
+    overflow: hidden;
+    display: grid; gap: clamp(0.75rem, 2vw, 1.5rem);
+    border-top: 1px solid var(--line);
+  }
+  .row { overflow: hidden; }
+  .track { display: flex; gap: clamp(0.75rem, 2vw, 1.5rem); width: max-content; will-change: transform; }
+  .card {
+    flex: none; margin: 0;
+    height: clamp(260px, 36vw, 520px); aspect-ratio: 3 / 4;
+    overflow: hidden; background: #111;
+  }
+  .card img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.6s;
+    filter: grayscale(0.15);
+  }
+  .card:hover img { transform: scale(1.05); filter: none; }
+  .ticker .track { gap: 0; align-items: center; }
+  .ticker span {
+    flex: none;
+    font-stretch: 125%; font-weight: 850;
+    font-size: clamp(3rem, 10vw, 9rem);
+    line-height: 1; letter-spacing: -0.045em;
+    padding-right: 0.35em; white-space: nowrap;
+  }
+  .ticker span:nth-child(even) { color: transparent; -webkit-text-stroke: 2px var(--ink); }
+
+  /* ---------- Signup ---------- */
+  .signup {
+    display: grid; grid-template-columns: minmax(0, 30rem) 1fr;
+    gap: 1.5rem var(--pad);
+    margin: 0 var(--pad);
+    padding: clamp(1.5rem, 4vw, 2.5rem) 0 0;
+    border-top: 1px solid var(--line);
+  }
+  .signup h2 {
+    margin: 0; font-weight: 500;
+    font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.25; max-width: 24ch;
+  }
+  .signup h2 span { display: block; color: var(--muted); }
+  form { display: flex; flex-wrap: wrap; gap: 0.75rem; align-content: start; max-width: 32rem; }
+  .field { flex: 1 1 14rem; display: grid; gap: 0.35rem; }
+  label { font-size: 0.85rem; color: var(--muted); }
+  input[type="email"] {
+    font: inherit; color: var(--ink); background: transparent;
+    border: 0; border-bottom: 1px solid var(--ink); border-radius: 0;
+    padding: 0.55rem 0; width: 100%;
+  }
+  input[type="email"]::placeholder { color: var(--muted); opacity: 0.7; }
+  input[type="email"]:focus-visible { outline: none; border-bottom: 2px solid var(--accent); padding-bottom: calc(0.55rem - 1px); }
+  button[type="submit"] {
+    font: inherit; font-weight: 600; align-self: end;
+    background: var(--ink); color: var(--bg);
+    border: 0; border-radius: 999px; padding: 0.75rem 1.4rem; cursor: pointer;
+  }
+  button[type="submit"]:hover { background: var(--accent); color: #fff; }
+  button[disabled] { opacity: 0.5; cursor: progress; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .status { flex-basis: 100%; margin: 0; min-height: 1.5em; font-size: 0.95rem; }
+  .status.error { color: #B3261E; }
+  @media (prefers-color-scheme: dark) { .status.error { color: #FF8A80; } }
+
+  .foot {
+    display: flex; justify-content: space-between; gap: 1rem;
+    padding: clamp(2rem, 5vw, 3.5rem) var(--pad) calc(var(--pad) + env(safe-area-inset-bottom, 0px));
+    font-size: 0.85rem; color: var(--muted);
+  }
+  .foot p { margin: 0; }
+
+  @media (max-width: 720px) {
+    .signup { grid-template-columns: 1fr; }
+    .top { flex-direction: column; gap: 0.5rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .row { overflow-x: auto; }
+    .card img, .intro { transition: none; }
+  }
 </style>
 </head>
 <body>
-<header class="top">
-<p>Clothing. First drop coming soon.</p>
-<nav aria-label="Contact">
-<a id="ig-link" href="https://instagram.com/ohdamm.official" rel="noopener">Instagram</a>
-<a id="mail-link" href="mailto:hello@example.com">Email</a>
-</nav>
-</header>
-<div class="mark-wrap">
-<p class="kicker" id="kicker">Fashion that makes you say</p>
-<h1 class="mark" id="mark" tabindex="0" aria-label="Oh Damm"><span aria-hidden="true" id="mark-text">Oh Damm</span></h1>
-</div>
-<section class="signup" aria-labelledby="signup-title">
-<h2 id="signup-title">Be first to see the drop.<span>Join the list and we'll email you the date.</span></h2>
-<form id="notify" method="POST" novalidate>
-<div class="field">
-<label for="email">Email</label>
-<input id="email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required>
-</div>
-<div class="hp" aria-hidden="true">
-<label for="website">Leave this empty</label>
-<input id="website" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
-</div>
-<button type="submit">Notify me</button>
-<p class="status" id="status" role="status" aria-live="polite"></p>
-</form>
-</section>
-<footer class="foot">
-<p>&copy; <span id="year">2026</span> Oh Damm</p>
-<p>Nothing to see yet. Almost.</p>
-</footer>
+
+  <!-- Flash-cut intro: plays once per visit -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <img alt="" src="look-6.webp"><img alt="" src="look-7.webp"><img alt="" src="look-4.webp"><img alt="" src="look-5.webp"><img alt="" src="look-2.webp"><img alt="" src="look-1.webp"><img alt="" src="look-3.webp">
+    <div class="intro-word" id="intro-word"></div>
+    <button class="intro-skip" id="intro-skip" type="button" tabindex="-1">Skip</button>
+  </div>
+  <script>
+    (function () {
+      var seen = false;
+      try { seen = sessionStorage.getItem("od_intro") === "1"; } catch (e) {}
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!seen && !reduce) document.documentElement.classList.add("intro-on");
+    })();
+  </script>
+
+  <section class="hero">
+    <header class="top">
+      <p>Clothing. First drop coming soon.</p>
+      <nav aria-label="Contact">
+        <a id="ig-link" href="https://instagram.com/ohdamm.official" rel="noopener">Instagram</a>
+        <a id="mail-link" href="mailto:hello@example.com">Email</a>
+      </nav>
+    </header>
+    <div class="mark-wrap">
+      <p class="kicker">Fashion that makes you say</p>
+      <h1 class="mark" id="mark" tabindex="0" aria-label="Oh Damm"><span aria-hidden="true" id="mark-text">Oh Damm</span></h1>
+    </div>
+  </section>
+
+  <section class="runway" aria-label="Lookbook">
+    <div class="row" data-dir="-1" data-speed="45">
+      <div class="track">
+        <figure class="card"><img src="look-1.webp" alt="Black hoodie with FUCK YOUR OPINION, NOBODY ASKED printed on the back, in the desert" loading="lazy" width="900" height="1210"></figure>
+        <figure class="card"><img src="look-4.webp" alt="Model crossing the street in jeans with Oh on the back pocket" loading="lazy" width="900" height="1201"></figure>
+        <figure class="card"><img src="look-6.webp" alt="Black beanie with Oh Damm embroidered in white" loading="lazy" width="900" height="1213"></figure>
+        <figure class="card"><img src="look-3.webp" alt="Black hoodie with CRY ABOUT IT, I'LL WAIT on the back, at night" loading="lazy" width="900" height="1212"></figure>
+      </div>
+    </div>
+    <div class="row ticker" data-dir="-1" data-speed="110" aria-hidden="true">
+      <div class="track">
+        <span>OH DAMM</span><span>OH DAMM</span><span>OH DAMM</span><span>OH DAMM</span>
+      </div>
+    </div>
+    <div class="row" data-dir="1" data-speed="45">
+      <div class="track">
+        <figure class="card"><img src="look-7.webp" alt="Black denim jacket with YOU'RE MY GOOD GIRL and red roses embroidered on the back" loading="lazy" width="900" height="1206"></figure>
+        <figure class="card"><img src="look-2.webp" alt="Black hoodie with I DON'T CUDDLE, I FUCK printed on the back" loading="lazy" width="900" height="1208"></figure>
+        <figure class="card"><img src="look-5.webp" alt="Jeans with Oh and Damm on the back pockets" loading="lazy" width="900" height="1207"></figure>
+        <figure class="card"><img src="look-1.webp" alt="" loading="lazy" width="900" height="1210"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="signup" aria-labelledby="signup-title">
+    <h2 id="signup-title">Be first to see the drop.<span>Join the list and we'll email you the date.</span></h2>
+    <form id="notify" method="POST" novalidate>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="you@email.com" required>
+      </div>
+      <div class="hp" aria-hidden="true">
+        <label for="website">Leave this empty</label>
+        <input id="website" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
+      </div>
+      <button type="submit">Notify me</button>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+
+  <footer class="foot">
+    <p>&copy; <span id="year">2026</span> Oh Damm</p>
+    <p>Nothing to see yet. Almost.</p>
+  </footer>
+
 <script>
-/* ====== Edit these two lines ====== */
-const INSTAGRAM_URL = "https://instagram.com/ohdamm.official";
-const CONTACT_EMAIL = ""; // add your email here later, e.g. "hello@ohdamm.com"
-const FORMSPREE_ID = "mppwldll";
-/* ================================== */
-document.getElementById("ig-link").href = INSTAGRAM_URL;
-const mailLink = document.getElementById("mail-link");
-if (CONTACT_EMAIL) { mailLink.href = "mailto:" + CONTACT_EMAIL; } else { mailLink.remove(); }
-document.getElementById("year").textContent = new Date().getFullYear();
+  /* ====== Settings ====== */
+  const INSTAGRAM_URL = "https://instagram.com/ohdamm.official";
+  const CONTACT_EMAIL = ""; // add your email here later, e.g. "hello@ohdamm.com"
+  const FORMSPREE_ID = "mppwldll";
   const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1552738381946032200/FSKKrWuXRNRcITshdjujarMWdvetCoY_iU4d1Eum7tFGd0ZBzkPjOigUbquubvMhoBbd";
-// Visitor ping: approximate city from IP, sent to Discord once per visit
-async function pingDiscord() {
-if (!DISCORD_WEBHOOK.startsWith("https://")) return;
-try { if (sessionStorage.getItem("od_pinged")) return; sessionStorage.setItem("od_pinged", "1"); } catch (e) {}
-try {
-const geo = await fetch("https://ipapi.co/json/").then(r => r.json());
-const city = geo.city || "Unknown city";
-const region = geo.region || "";
-const country = geo.country_name || "Unknown country";
-const time = new Date().toLocaleString("en-GB", { timeZone: geo.timezone || "UTC", dateStyle: "medium", timeStyle: "short" });
-const device = /Mobi|Android|iPhone/i.test(navigator.userAgent) ? "Mobile" : "Desktop";
-let source = "Direct";
-try { if (document.referrer) source = new URL(document.referrer).hostname; } catch (e) {}
-await fetch(DISCORD_WEBHOOK, {
-method: "POST",
-headers: { "Content-Type": "application/json" },
-body: JSON.stringify({
-embeds: [{
-title: "👀 Someone is on ohdamm.com",
-color: 0x5A0F1F,
-fields: [
-{ name: "📍 Location", value: city + (region ? ", " + region : "") + ", " + country, inline: true },
-{ name: "🕐 Local time", value: time, inline: true },
-{ name: "📱 Device", value: device, inline: true },
-{ name: "🔗 Came from", value: source, inline: true }
-],
-footer: { text: "Oh Damm visitor" }
-}]
-})
-});
-} catch (e) { /* fail silently */ }
-}
-pingDiscord();
-// Wordmark: the m's stretch out like the reaction itself
-const mark = document.getElementById("mark");
-const text = document.getElementById("mark-text");
-const BASE = "Oh Dam", MIN = 1, MAX = 14;
-const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-let count = MIN, target = MIN, timer = null;
-function render() { text.textContent = BASE + "m".repeat(count); }
-function step() {
-if (count === target) { clearInterval(timer); timer = null; return; }
-count += count < target ? 1 : -1;
-render();
-}
-function goTo(n) {
-target = n;
-if (reduce) { count = n; render(); return; }
-if (!timer) timer = setInterval(step, count < n ? 70 : 35);
-}
-const stretch = () => goTo(MAX);
-const settle = () => goTo(MIN);
-mark.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") stretch(); });
-mark.addEventListener("pointerleave", e => { if (e.pointerType === "mouse") settle(); });
-mark.addEventListener("click", () => (target === MAX ? settle() : stretch()));
-mark.addEventListener("focus", stretch);
-mark.addEventListener("blur", settle);
-// Signup form
-const form = document.getElementById("notify");
-const status = document.getElementById("status");
-const email = document.getElementById("email");
-const btn = form.querySelector("button");
-function say(msg, isError) {
-status.textContent = msg;
-status.classList.toggle("error", !!isError);
-}
-form.addEventListener("submit", async e => {
-e.preventDefault();
-const value = email.value.trim();
-if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-say("That email doesn't look right. Check it and try again.", true);
-email.focus();
-return;
-}
-btn.disabled = true;
-say("");
-try {
-const res = await fetch("https://formspree.io/f/" + FORMSPREE_ID, {
-method: "POST",
-headers: { "Accept": "application/json" },
-body: new FormData(form)
-});
-if (!res.ok) throw new Error("failed");
-form.reset();
-say("You're on the list. We'll email you before the drop.");
-} catch (err) {
-say("Your email wasn't saved. Try again in a minute.", true);
-} finally {
-btn.disabled = false;
-}
-});
+  /* ====================== */
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  document.getElementById("ig-link").href = INSTAGRAM_URL;
+  const mailLink = document.getElementById("mail-link");
+  if (CONTACT_EMAIL) { mailLink.href = "mailto:" + CONTACT_EMAIL; } else { mailLink.remove(); }
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  /* ---------- Flash-cut intro ---------- */
+  (function intro() {
+    const root = document.documentElement;
+    if (!root.classList.contains("intro-on")) return;
+    const el = document.getElementById("intro");
+    const imgs = Array.from(el.querySelectorAll("img"));
+    const word = document.getElementById("intro-word");
+    let done = false, timers = [];
+
+    function finish() {
+      if (done) return; done = true;
+      timers.forEach(clearTimeout);
+      try { sessionStorage.setItem("od_intro", "1"); } catch (e) {}
+      el.classList.add("leave");
+      setTimeout(() => { root.classList.remove("intro-on"); el.remove(); }, 720);
+    }
+    el.addEventListener("click", finish);
+    window.addEventListener("keydown", finish, { once: true });
+
+    // [image index or -1 for black, text, duration ms]
+    const frames = [
+      [0, "", 170], [1, "LOOK.", 170], [2, "", 150], [3, "LOOK.", 150],
+      [4, "", 140], [5, "LOOK AGAIN.", 260], [6, "", 140],
+      [-1, "Oh Dam", 120]
+    ];
+    function show(i) {
+      imgs.forEach((im, k) => im.classList.toggle("on", k === i));
+      if (i >= 0) imgs[i].style.transform = "scale(" + (1.04 + Math.random() * 0.06) + ")";
+    }
+    function run() {
+      let t = 0;
+      frames.forEach(([img, text, dur]) => {
+        timers.push(setTimeout(() => { show(img); word.textContent = text; }, t));
+        t += dur;
+      });
+      // the m's stretch, then snap back to Oh Damm!
+      let m = "Oh Dam";
+      for (let k = 0; k < 7; k++) {
+        timers.push(setTimeout(() => { m += "m"; word.textContent = m; }, t)); t += 55;
+      }
+      timers.push(setTimeout(() => { word.textContent = "Oh Damm!"; }, t + 120));
+      timers.push(setTimeout(finish, t + 1000));
+    }
+    // start once images are ready (or after 2.5s at most)
+    let loaded = 0, started = false;
+    const go = () => { if (!started) { started = true; run(); } };
+    imgs.forEach(im => {
+      if (im.complete) loaded++;
+      else im.addEventListener("load", () => { if (++loaded === imgs.length) go(); }, { once: true });
+    });
+    if (loaded === imgs.length) go();
+    setTimeout(go, 2500);
+    document.getElementById("intro-skip").addEventListener("click", e => { e.stopPropagation(); finish(); });
+  })();
+
+  /* ---------- Wordmark: the m's stretch on hover or tap ---------- */
+  const mark = document.getElementById("mark");
+  const markText = document.getElementById("mark-text");
+  const BASE = "Oh Dam", MIN = 1, MAX = 14;
+  let count = MIN, target = MIN, timer = null;
+  function render() { markText.textContent = BASE + "m".repeat(count); }
+  function step() {
+    if (count === target) { clearInterval(timer); timer = null; return; }
+    count += count < target ? 1 : -1;
+    render();
+  }
+  function goTo(n) {
+    target = n;
+    if (reduceMotion) { count = n; render(); return; }
+    if (!timer) timer = setInterval(step, count < n ? 70 : 35);
+  }
+  mark.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") goTo(MAX); });
+  mark.addEventListener("pointerleave", e => { if (e.pointerType === "mouse") goTo(MIN); });
+  mark.addEventListener("click", () => goTo(target === MAX ? MIN : MAX));
+  mark.addEventListener("focus", () => goTo(MAX));
+  mark.addEventListener("blur", () => goTo(MIN));
+
+  /* ---------- Infinite runway ---------- */
+  (function runway() {
+    if (reduceMotion) return;
+    const section = document.querySelector(".runway");
+    const rows = Array.from(section.querySelectorAll(".row")).map(row => {
+      const track = row.querySelector(".track");
+      const originals = Array.from(track.children);
+      // clone the set until it covers the screen twice over
+      let copies = 0;
+      do {
+        originals.forEach(n => {
+          const c = n.cloneNode(true);
+          c.setAttribute("aria-hidden", "true");
+          c.querySelectorAll("img").forEach(i => i.alt = "");
+          track.appendChild(c);
+        });
+        copies++;
+      } while (track.scrollWidth < window.innerWidth * 3 && copies < 8);
+      return {
+        track, n: originals.length,
+        dir: Number(row.dataset.dir), speed: Number(row.dataset.speed),
+        offset: 0, setW: 0
+      };
+    });
+    function measure() {
+      rows.forEach(r => {
+        const kids = r.track.children;
+        r.setW = kids[r.n].offsetLeft - kids[0].offsetLeft;
+      });
+    }
+    measure();
+    window.addEventListener("resize", measure);
+
+    let boost = 0, hoverMul = 1, hoverTarget = 1, visible = true, last = performance.now();
+    let lastY = window.scrollY, lastT = last;
+    window.addEventListener("scroll", () => {
+      const now = performance.now();
+      const v = Math.abs(window.scrollY - lastY) / Math.max(now - lastT, 1); // px per ms
+      boost = Math.min(boost + v * 3, 8);
+      lastY = window.scrollY; lastT = now;
+    }, { passive: true });
+    section.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") hoverTarget = 0.2; });
+    section.addEventListener("pointerleave", () => { hoverTarget = 1; });
+    new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(section);
+
+    function tick(now) {
+      const dt = Math.min((now - last) / 1000, 0.05); last = now;
+      boost *= 0.93;
+      hoverMul += (hoverTarget - hoverMul) * 0.08;
+      if (visible) {
+        const mul = hoverMul * (1 + boost);
+        rows.forEach(r => {
+          if (!r.setW) return;
+          r.offset += r.dir * r.speed * mul * dt;
+          r.offset = ((r.offset % r.setW) - r.setW) % r.setW; // keep in (-setW, 0]
+          r.track.style.transform = "translate3d(" + r.offset.toFixed(2) + "px,0,0)";
+        });
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+
+  /* ---------- Visitor ping to Discord (once per visit) ---------- */
+  async function pingDiscord() {
+    if (!DISCORD_WEBHOOK.startsWith("https://")) return;
+    try { if (sessionStorage.getItem("od_pinged")) return; sessionStorage.setItem("od_pinged", "1"); } catch (e) {}
+    try {
+      const geo = await fetch("https://ipapi.co/json/").then(r => r.json());
+      const city = geo.city || "Unknown city";
+      const region = geo.region || "";
+      const country = geo.country_name || "Unknown country";
+      const time = new Date().toLocaleString("en-GB", { timeZone: geo.timezone || "UTC", dateStyle: "medium", timeStyle: "short" });
+      const device = /Mobi|Android|iPhone/i.test(navigator.userAgent) ? "Mobile" : "Desktop";
+      let source = "Direct";
+      try { if (document.referrer) source = new URL(document.referrer).hostname; } catch (e) {}
+      await fetch(DISCORD_WEBHOOK, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          embeds: [{
+            title: "👀 Someone is on ohdamm.com",
+            color: 0x5A0F1F,
+            fields: [
+              { name: "📍 Location", value: city + (region ? ", " + region : "") + ", " + country, inline: true },
+              { name: "🕐 Local time", value: time, inline: true },
+              { name: "📱 Device", value: device, inline: true },
+              { name: "🔗 Came from", value: source, inline: true }
+            ],
+            footer: { text: "Oh Damm visitor" }
+          }]
+        })
+      });
+    } catch (e) { /* fail silently */ }
+  }
+  pingDiscord();
+
+  /* ---------- Signup form ---------- */
+  const form = document.getElementById("notify");
+  const statusEl = document.getElementById("status");
+  const email = document.getElementById("email");
+  const btn = form.querySelector('button[type="submit"]');
+  function say(msg, isError) {
+    statusEl.textContent = msg;
+    statusEl.classList.toggle("error", !!isError);
+  }
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const value = email.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      say("That email doesn't look right. Check it and try again.", true);
+      email.focus();
+      return;
+    }
+    btn.disabled = true;
+    say("");
+    try {
+      const res = await fetch("https://formspree.io/f/" + FORMSPREE_ID, {
+        method: "POST",
+        headers: { "Accept": "application/json" },
+        body: new FormData(form)
+      });
+      if (!res.ok) throw new Error("failed");
+      form.reset();
+      say("You're on the list. We'll email you before the drop.");
+    } catch (err) {
+      say("Your email wasn't saved. Try again in a minute.", true);
+    } finally {
+      btn.disabled = false;
+    }
+  });
 </script>
 </body>
 </html>
