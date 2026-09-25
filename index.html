@@ -368,7 +368,7 @@
     const frames = [
       [0, "", 170], [1, "LOOK.", 170], [2, "", 150], [3, "LOOK.", 150],
       [4, "", 140], [5, "LOOK AGAIN.", 260], [6, "", 140],
-      [-1, "Oh Dam", 120]
+      [-1, "Oh Damm", 120]
     ];
     function show(i) {
       imgs.forEach((im, k) => im.classList.toggle("on", k === i));
@@ -380,13 +380,8 @@
         timers.push(setTimeout(() => { show(img); word.textContent = text; }, t));
         t += dur;
       });
-      // the m's stretch, then snap back to Oh Damm!
-      let m = "Oh Dam";
-      for (let k = 0; k < 7; k++) {
-        timers.push(setTimeout(() => { m += "m"; word.textContent = m; }, t)); t += 55;
-      }
-      timers.push(setTimeout(() => { word.textContent = "Oh Damm!"; }, t + 120));
-      timers.push(setTimeout(finish, t + 1000));
+      // hold on the logo, then reveal the site
+      timers.push(setTimeout(finish, t + 1100));
     }
     // start once images are ready (or after 2.5s at most)
     let loaded = 0, started = false;
@@ -482,29 +477,37 @@
 
     if (touch) {
       // ----- phone: shake to shuffle -----
-      hint.textContent = "Shake your phone ↯";
-      let listening = false, lastShake = 0, last = null;
+      hint.textContent = "Tap, then shake ↯";
+      let listening = false, lastShake = 0, peaks = 0, peakWindow = 0;
       function onMotion(e) {
-        const a = e.accelerationIncludingGravity; if (!a || a.x === null) return;
-        if (last) {
-          const d = Math.abs(a.x - last.x) + Math.abs(a.y - last.y) + Math.abs(a.z - last.z);
-          const now = Date.now();
-          if (d > 28 && now - lastShake > 1200) { lastShake = now; burst(); }
+        let force = 0;
+        const a = e.acceleration, g = e.accelerationIncludingGravity;
+        if (a && a.x !== null) force = Math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
+        else if (g && g.x !== null) force = Math.abs(Math.sqrt(g.x * g.x + g.y * g.y + g.z * g.z) - 9.81);
+        const now = Date.now();
+        if (force > 12) {
+          if (now - peakWindow > 600) { peaks = 0; peakWindow = now; }
+          peaks++;
+          if (peaks >= 2 && now - lastShake > 1200) { lastShake = now; peaks = 0; burst(); }
         }
-        last = { x: a.x, y: a.y, z: a.z };
       }
-      function listen() { if (!listening) { listening = true; window.addEventListener("devicemotion", onMotion); } }
-      const needsPermission = typeof DeviceMotionEvent !== "undefined" && typeof DeviceMotionEvent.requestPermission === "function";
-      if (!needsPermission && "DeviceMotionEvent" in window) listen();
-      if (needsPermission) {
-        // iPhone only allows motion access after a tap, so ask on the first tap anywhere
-        const ask = async () => {
-          document.removeEventListener("touchend", ask);
-          try { if ((await DeviceMotionEvent.requestPermission()) === "granted") listen(); } catch (e) {}
-        };
-        document.addEventListener("touchend", ask);
+      function listen() {
+        if (listening) return;
+        listening = true;
+        window.addEventListener("devicemotion", onMotion);
+        hint.textContent = "Now shake it ↯";
       }
-      hint.addEventListener("click", burst);
+      hint.addEventListener("click", async () => {
+        if (!listening) {
+          const needsPermission = typeof DeviceMotionEvent !== "undefined" && typeof DeviceMotionEvent.requestPermission === "function";
+          if (needsPermission) {
+            try { if ((await DeviceMotionEvent.requestPermission()) === "granted") listen(); } catch (e) {}
+          } else if ("DeviceMotionEvent" in window) {
+            listen();
+          }
+        }
+        burst();
+      });
     } else {
       // ----- laptop: fan follows the cursor, click to shuffle -----
       hint.textContent = "Click to shuffle";
