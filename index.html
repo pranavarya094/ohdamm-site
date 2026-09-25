@@ -144,14 +144,18 @@
     line-height: 1.1; letter-spacing: -0.01em;
   }
   .mark {
-    margin: 0;
+    margin: 0; cursor: pointer;
     font-stretch: 125%; font-weight: 850;
     font-size: clamp(3.5rem, 15.5vw, 20rem);
     line-height: 0.78; letter-spacing: -0.045em;
-    white-space: nowrap; cursor: default; user-select: none;
+    white-space: nowrap; user-select: none;
     padding-bottom: 0.06em;
   }
   .mark:focus-visible { outline-offset: 6px; }
+  .mark-wrap.stretched {
+    -webkit-mask-image: linear-gradient(to right, #000 78%, transparent 99%);
+            mask-image: linear-gradient(to right, #000 78%, transparent 99%);
+  }
 
   /* ---------- Infinite runway ---------- */
   .runway {
@@ -401,7 +405,11 @@
   const markText = document.getElementById("mark-text");
   const BASE = "Oh Dam", MIN = 1, MAX = 14;
   let count = MIN, target = MIN, timer = null;
-  function render() { markText.textContent = BASE + "m".repeat(count); }
+  const markWrap = mark.parentElement;
+  function render() {
+    markText.textContent = BASE + "m".repeat(count);
+    markWrap.classList.toggle("stretched", count > 2);
+  }
   function step() {
     if (count === target) { clearInterval(timer); timer = null; return; }
     count += count < target ? 1 : -1;
@@ -412,11 +420,14 @@
     if (reduceMotion) { count = n; render(); return; }
     if (!timer) timer = setInterval(step, count < n ? 70 : 35);
   }
-  mark.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") goTo(MAX); });
-  mark.addEventListener("pointerleave", e => { if (e.pointerType === "mouse") goTo(MIN); });
-  mark.addEventListener("click", () => goTo(target === MAX ? MIN : MAX));
-  mark.addEventListener("focus", () => goTo(MAX));
-  mark.addEventListener("blur", () => goTo(MIN));
+  let snapBack = null;
+  function stretchOnce() {
+    goTo(MAX);
+    clearTimeout(snapBack);
+    snapBack = setTimeout(() => goTo(MIN), 1400);
+  }
+  mark.addEventListener("click", stretchOnce);
+  mark.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); stretchOnce(); } });
 
   /* ---------- Hero deck: shake (phone) / auto-fan + click (laptop) ---------- */
   (function deck() {
@@ -484,17 +495,16 @@
       }
       function listen() { if (!listening) { listening = true; window.addEventListener("devicemotion", onMotion); } }
       const needsPermission = typeof DeviceMotionEvent !== "undefined" && typeof DeviceMotionEvent.requestPermission === "function";
-      if (needsPermission) hint.textContent = "Tap, then shake ↯";
-      else if ("DeviceMotionEvent" in window) listen();
-      hint.addEventListener("click", async () => {
-        if (needsPermission && !listening) {
-          try {
-            const r = await DeviceMotionEvent.requestPermission();
-            if (r === "granted") { listen(); hint.textContent = "Now shake it ↯"; }
-          } catch (e) {}
-        }
-        burst();
-      });
+      if (!needsPermission && "DeviceMotionEvent" in window) listen();
+      if (needsPermission) {
+        // iPhone only allows motion access after a tap, so ask on the first tap anywhere
+        const ask = async () => {
+          document.removeEventListener("touchend", ask);
+          try { if ((await DeviceMotionEvent.requestPermission()) === "granted") listen(); } catch (e) {}
+        };
+        document.addEventListener("touchend", ask);
+      }
+      hint.addEventListener("click", burst);
     } else {
       // ----- laptop: fan follows the cursor, click to shuffle -----
       hint.textContent = "Click to shuffle";
