@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Oh Damm</title>
+<meta name="theme-color" content="#E4E5E1" id="theme-color">
 <meta name="description" content="Oh Damm. Fashion that makes you say it. First drop coming soon.">
 <meta property="og:title" content="Oh Damm">
 <meta property="og:description" content="Fashion that makes you say Oh Damm. First drop coming soon.">
@@ -45,6 +46,7 @@
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    transition: color 0.35s ease;
   }
   html.intro-on, html.intro-on body { overflow: hidden; height: 100%; }
 
@@ -519,6 +521,44 @@
         }, { passive: true });
       }
     }
+  })();
+
+  /* ---------- Page fades to burgundy as you scroll ---------- */
+  (function burgundyScroll() {
+    const root = document.documentElement;
+    const meta = document.getElementById("theme-color");
+    const BURGUNDY = [90, 15, 31], STONE = "#E4E5E1";
+    const vars = ["--bg", "--ink", "--muted", "--line", "--accent"];
+    let base = {};
+    const toRgb = h => { h = h.trim().replace("#", ""); return [0, 2, 4].map(i => parseInt(h.substr(i, 2), 16)); };
+    function readBase() {
+      vars.forEach(v => root.style.removeProperty(v));
+      const cs = getComputedStyle(root);
+      vars.forEach(v => base[v] = cs.getPropertyValue(v).trim());
+      base.bgRgb = toRgb(base["--bg"]);
+    }
+    let ticking = false;
+    function paint() {
+      ticking = false;
+      const max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      const p = Math.min(window.scrollY / (max * 0.75), 1);
+      const eased = p * p * (3 - 2 * p); // smooth start and finish
+      const c = base.bgRgb.map((v, i) => Math.round(v + (BURGUNDY[i] - v) * eased));
+      const bg = "rgb(" + c.join(",") + ")";
+      const lum = (0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]) / 255;
+      const onDark = lum < 0.45;
+      root.style.setProperty("--bg", bg);
+      root.style.setProperty("--ink", onDark ? STONE : base["--ink"]);
+      root.style.setProperty("--muted", onDark ? "rgba(228,229,225,0.72)" : base["--muted"]);
+      root.style.setProperty("--line", onDark ? "rgba(228,229,225,0.2)" : base["--line"]);
+      root.style.setProperty("--accent", onDark ? "#F3C6CF" : base["--accent"]);
+      if (meta) meta.content = bg;
+    }
+    function request() { if (!ticking) { ticking = true; requestAnimationFrame(paint); } }
+    readBase(); paint();
+    window.addEventListener("scroll", request, { passive: true });
+    window.addEventListener("resize", request);
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { readBase(); paint(); });
   })();
 
   /* ---------- Infinite runway ---------- */
