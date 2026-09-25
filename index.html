@@ -89,9 +89,47 @@
   /* ---------- Hero ---------- */
   .hero {
     min-height: 100svh;
-    display: grid;
-    grid-template-rows: auto 1fr;
+    display: flex; flex-direction: column;
     padding-top: env(safe-area-inset-top, 0px);
+  }
+  /* photo deck that fills the hero */
+  .stage {
+    flex: 1; min-height: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: clamp(0.9rem, 2vw, 1.4rem);
+    padding: 0 var(--pad) clamp(1rem, 3vw, 2rem);
+    perspective: 1400px;
+  }
+  .deck {
+    --off: 58%; --rot: 7deg;
+    position: relative;
+    height: min(46svh, 520px); aspect-ratio: 3 / 4;
+    cursor: pointer; transform-style: preserve-3d;
+    transition: transform 0.4s ease-out;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .deck img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; display: block; background: #111;
+    box-shadow: 0 1.5rem 3rem rgba(0,0,0,0.28);
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.45s ease;
+    user-select: none; -webkit-user-drag: none;
+  }
+  .hint {
+    font: inherit; font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink); background: transparent;
+    border: 1px solid var(--ink); border-radius: 999px;
+    padding: 0.55rem 1.1rem; cursor: pointer;
+  }
+  .hint:hover { background: var(--ink); color: var(--bg); }
+  .shaking .mark { animation: jolt 0.45s linear; }
+  @keyframes jolt {
+    0%,100% { transform: translate(0,0) rotate(0); }
+    20% { transform: translate(-6px,2px) rotate(-1deg); }
+    40% { transform: translate(6px,-2px) rotate(1deg); }
+    60% { transform: translate(-4px,1px) rotate(-0.5deg); }
+    80% { transform: translate(3px,-1px) rotate(0.5deg); }
   }
   .top {
     display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
@@ -99,7 +137,7 @@
   }
   .top p { margin: 0; color: var(--muted); }
   .top nav { display: flex; gap: 1.5rem; }
-  .mark-wrap { align-self: end; overflow: hidden; padding: 0 var(--pad) clamp(1.5rem, 4vw, 3rem); }
+  .mark-wrap { overflow: hidden; padding: 0 var(--pad) clamp(1.25rem, 3vw, 2.5rem); }
   .kicker {
     margin: 0 0 clamp(0.5rem, 1.5vw, 1.25rem);
     font-weight: 500; font-size: clamp(1.25rem, 3.2vw, 2.75rem);
@@ -189,7 +227,10 @@
 
   @media (max-width: 720px) {
     .signup { grid-template-columns: 1fr; }
-    .top { flex-direction: column; gap: 0.5rem; }
+    .top { flex-direction: row; font-size: 0.85rem; padding-bottom: 0.75rem; }
+    .deck { --off: 20%; --rot: 5deg; height: min(55svh, 480px); }
+    .runway { padding: 1.5rem 0; }
+    .foot { flex-direction: column; gap: 0.25rem; }
   }
   @media (prefers-reduced-motion: reduce) {
     .row { overflow-x: auto; }
@@ -222,6 +263,18 @@
         <a id="mail-link" href="mailto:hello@example.com">Email</a>
       </nav>
     </header>
+    <div class="stage">
+      <div class="deck" id="deck" role="button" tabindex="0" aria-label="Shuffle the looks">
+        <img src="look-6.webp" alt="Oh Damm beanie" width="900" height="1213">
+        <img src="look-7.webp" alt="YOU'RE MY GOOD GIRL denim jacket" width="900" height="1206">
+        <img src="look-5.webp" alt="Oh Damm jeans" width="900" height="1207">
+        <img src="look-3.webp" alt="CRY ABOUT IT, I'LL WAIT hoodie" width="900" height="1212">
+        <img src="look-4.webp" alt="Oh jeans on the street" width="900" height="1201">
+        <img src="look-2.webp" alt="I DON'T CUDDLE, I FUCK hoodie" width="900" height="1208">
+        <img src="look-1.webp" alt="FUCK YOUR OPINION, NOBODY ASKED hoodie" width="900" height="1210">
+      </div>
+      <button class="hint" id="hint" type="button">Click to shuffle</button>
+    </div>
     <div class="mark-wrap">
       <p class="kicker">Fashion that makes you say</p>
       <h1 class="mark" id="mark" tabindex="0" aria-label="Oh Damm"><span aria-hidden="true" id="mark-text">Oh Damm</span></h1>
@@ -364,6 +417,96 @@
   mark.addEventListener("click", () => goTo(target === MAX ? MIN : MAX));
   mark.addEventListener("focus", () => goTo(MAX));
   mark.addEventListener("blur", () => goTo(MIN));
+
+  /* ---------- Hero deck: shake (phone) / auto-fan + click (laptop) ---------- */
+  (function deck() {
+    const deckEl = document.getElementById("deck");
+    const hint = document.getElementById("hint");
+    const hero = document.querySelector(".hero");
+    const cards = Array.from(deckEl.querySelectorAll("img"));
+    const touch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    let order = cards.map((_, i) => cards.length - 1 - i); // order[0] = top card
+    let tilt = cards.map(() => (Math.random() - 0.5) * 4);
+    let busy = false;
+
+    function layout() {
+      order.forEach((ci, p) => {
+        const c = cards[ci];
+        let t, o = 1;
+        if (p === 0) t = "translateX(0) rotate(" + tilt[ci] + "deg)";
+        else if (p === 1) t = "translateX(calc(var(--off) * -1)) rotate(calc(var(--rot) * -1)) scale(0.92)";
+        else if (p === 2) t = "translateX(var(--off)) rotate(var(--rot)) scale(0.92)";
+        else { t = "translateX(0) scale(0.85)"; o = 0; }
+        c.style.transform = t; c.style.opacity = o; c.style.zIndex = 20 - p;
+      });
+    }
+    function next() { order.push(order.shift()); layout(); }
+
+    function burst() {
+      if (busy) return; busy = true;
+      hero.classList.add("shaking");
+      goTo(MAX);
+      if (navigator.vibrate) navigator.vibrate([40, 30, 60]);
+      if (!reduceMotion) {
+        cards.forEach(c => {
+          const x = (Math.random() - 0.5) * 160, y = (Math.random() - 0.5) * 70, r = (Math.random() - 0.5) * 70;
+          c.style.opacity = 1;
+          c.style.transform = "translate(" + x + "%," + y + "%) rotate(" + r + "deg)";
+        });
+      }
+      setTimeout(() => {
+        for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
+        tilt = cards.map(() => (Math.random() - 0.5) * 4);
+        layout();
+      }, reduceMotion ? 0 : 420);
+      setTimeout(() => { goTo(MIN); hero.classList.remove("shaking"); busy = false; }, 1100);
+    }
+
+    layout();
+    deckEl.addEventListener("click", burst);
+    deckEl.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); burst(); } });
+
+    // keeps moving on its own
+    if (!reduceMotion) setInterval(() => { if (!busy && !document.hidden) next(); }, 2600);
+
+    if (touch) {
+      // ----- phone: shake to shuffle -----
+      hint.textContent = "Shake your phone ↯";
+      let listening = false, lastShake = 0, last = null;
+      function onMotion(e) {
+        const a = e.accelerationIncludingGravity; if (!a || a.x === null) return;
+        if (last) {
+          const d = Math.abs(a.x - last.x) + Math.abs(a.y - last.y) + Math.abs(a.z - last.z);
+          const now = Date.now();
+          if (d > 28 && now - lastShake > 1200) { lastShake = now; burst(); }
+        }
+        last = { x: a.x, y: a.y, z: a.z };
+      }
+      function listen() { if (!listening) { listening = true; window.addEventListener("devicemotion", onMotion); } }
+      const needsPermission = typeof DeviceMotionEvent !== "undefined" && typeof DeviceMotionEvent.requestPermission === "function";
+      if (needsPermission) hint.textContent = "Tap, then shake ↯";
+      else if ("DeviceMotionEvent" in window) listen();
+      hint.addEventListener("click", async () => {
+        if (needsPermission && !listening) {
+          try {
+            const r = await DeviceMotionEvent.requestPermission();
+            if (r === "granted") { listen(); hint.textContent = "Now shake it ↯"; }
+          } catch (e) {}
+        }
+        burst();
+      });
+    } else {
+      // ----- laptop: fan follows the cursor, click to shuffle -----
+      hint.textContent = "Click to shuffle";
+      hint.addEventListener("click", burst);
+      if (!reduceMotion) {
+        window.addEventListener("pointermove", e => {
+          const x = e.clientX / window.innerWidth - 0.5, y = e.clientY / window.innerHeight - 0.5;
+          deckEl.style.transform = "rotateY(" + (x * 14) + "deg) rotateX(" + (-y * 10) + "deg)";
+        }, { passive: true });
+      }
+    }
+  })();
 
   /* ---------- Infinite runway ---------- */
   (function runway() {
