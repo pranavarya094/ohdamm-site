@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Oh Damm</title>
 <meta name="theme-color" content="#E4E5E1" id="theme-color">
-<meta name="description" content="Oh Damm. Fashion that makes you say it. First drop coming soon.">
+<meta name="description" content="Oh Damm. Fashion that makes you say it. Orders open via Instagram DM @ohdamm.official.">
 <meta property="og:title" content="Oh Damm">
 <meta property="og:description" content="Fashion that makes you say Oh Damm. First drop coming soon.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='black'/><text x='50' y='72' font-family='Arial Black,Arial' font-weight='900' font-size='64' text-anchor='middle' fill='%23E4E5E1'>o</text></svg>">
@@ -189,6 +189,41 @@
   }
   .ticker span:nth-child(even) { color: transparent; -webkit-text-stroke: 2px var(--ink); }
 
+  /* ---------- Orders strip + order section ---------- */
+  .order-strip {
+    display: block; text-align: center; text-decoration: none;
+    background: var(--ink); color: var(--bg);
+    font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 0.7rem var(--pad);
+  }
+  .order-strip:hover { color: var(--bg); }
+  .order-strip span { opacity: 0.7; font-weight: 500; }
+  .order-strip .dot { display: inline-block; width: 0.5em; height: 0.5em; border-radius: 50%; background: #3DDC84; margin-right: 0.55em; vertical-align: 0.08em; animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+  .order {
+    margin: 0 var(--pad);
+    padding: clamp(2.5rem, 7vw, 5.5rem) 0;
+    border-top: 1px solid var(--line);
+    display: grid; gap: 1.25rem; justify-items: start;
+  }
+  .order .eyebrow { margin: 0; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .order h2 {
+    margin: 0; font-stretch: 125%; font-weight: 850;
+    font-size: clamp(2.4rem, 8vw, 7rem); line-height: 0.9; letter-spacing: -0.04em;
+  }
+  .order p.lede { margin: 0; max-width: 40ch; font-size: clamp(1.05rem, 1.8vw, 1.3rem); color: var(--muted); }
+  .order p.lede strong { color: var(--ink); font-weight: 600; }
+  .dm-btn {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    margin-top: 0.5rem; padding: 1rem 1.6rem; border-radius: 999px;
+    background: var(--ink); color: var(--bg); text-decoration: none;
+    font-weight: 700; font-size: 1.05rem;
+    transition: transform 0.2s ease;
+  }
+  .dm-btn:hover { color: var(--bg); transform: translateY(-2px); }
+  .order .steps { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin: 0.5rem 0 0; padding: 0; list-style: none; font-size: 0.9rem; color: var(--muted); }
+  .order .steps b { color: var(--ink); font-weight: 700; margin-right: 0.35em; }
+
   /* ---------- Signup ---------- */
   .signup {
     display: grid; grid-template-columns: minmax(0, 30rem) 1fr;
@@ -235,6 +270,8 @@
     .signup { grid-template-columns: 1fr; }
     .top { flex-direction: row; font-size: 0.85rem; padding-bottom: 0.75rem; }
     .deck { --off: 20%; --rot: 5deg; height: min(55svh, 480px); }
+    .order-strip span { display: none; }
+    .order-strip { font-size: 0.75rem; }
     .runway { padding: 1.5rem 0; }
     .foot { flex-direction: column; gap: 0.25rem; }
   }
@@ -262,8 +299,9 @@
   </script>
 
   <section class="hero">
+    <a class="order-strip" href="https://ig.me/m/ohdamm.official" target="_blank" rel="noopener"><i class="dot" aria-hidden="true"></i>Orders are open <span>✱ Instagram DMs only, for now</span> ✱ DM @ohdamm.official →</a>
     <header class="top">
-      <p>Clothing. First drop coming soon.</p>
+      <p>Clothing. Now taking orders via Instagram.</p>
       <nav aria-label="Contact">
         <a id="ig-link" href="https://instagram.com/ohdamm.official" rel="noopener">Instagram</a>
         <a id="mail-link" href="mailto:hello@example.com">Email</a>
@@ -323,8 +361,20 @@
     </div>
   </section>
 
+  <section class="order" id="order" aria-labelledby="order-title">
+    <p class="eyebrow">How to order</p>
+    <h2 id="order-title">Slide into<br>our DMs.</h2>
+    <p class="lede">For now, we're taking orders <strong>exclusively on Instagram</strong>. Send us the piece you want and your size, and we'll take care of the rest. Small drops, personal service, no checkout queues.</p>
+    <ol class="steps">
+      <li><b>01</b>Pick your piece</li>
+      <li><b>02</b>DM us with your size</li>
+      <li><b>03</b>Get ready to hear "Oh Damm"</li>
+    </ol>
+    <a class="dm-btn" href="https://ig.me/m/ohdamm.official" target="_blank" rel="noopener">DM @ohdamm.official <span aria-hidden="true">↗</span></a>
+  </section>
+
   <section class="signup" aria-labelledby="signup-title">
-    <h2 id="signup-title">Be first to see the drop.<span>Join the list and we'll email you the date.</span></h2>
+    <h2 id="signup-title">Not ordering today?<span>Join the list and we'll email you before every new drop.</span></h2>
     <form id="notify" method="POST" novalidate>
       <div class="field">
         <label for="email">Email</label>
@@ -341,7 +391,7 @@
 
   <footer class="foot">
     <p>&copy; <span id="year">2026</span> Oh Damm</p>
-    <p>Nothing to see yet. Almost.</p>
+    <p>Orders via Instagram DM, for now.</p>
   </footer>
 
 <script>
